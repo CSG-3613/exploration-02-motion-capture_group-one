@@ -5,6 +5,7 @@ using UnityEngine;
 public class SceneManager : MonoBehaviour
 {
     [SerializeField] Camera _camera;
+    [SerializeField] GameObject PointsParent;
     [SerializeField] List<GameObject> CameraLocations;
     public float cameraMoveSpeed = 5f;
     public float moveCooldown = 2f;
@@ -25,7 +26,7 @@ public class SceneManager : MonoBehaviour
     private void Update()
     {
         _camera.transform.position = Vector3.Lerp(prevLocation.position, targetLocation.position, cameraMoveSpeed * Time.deltaTime);
-        _camera.transform.LookAt(2 * _camera.transform.position - Vector3.zero);
+        _camera.transform.LookAt(2 * _camera.transform.position - PointsParent.transform.position);
         if (timer > 0)
         {
             timer -= Time.deltaTime;
