@@ -1,25 +1,51 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class SceneManager : MonoBehaviour
 {
     [SerializeField] Camera _camera;
-    [SerializeField] GameObject PointsParent;
-    [SerializeField] List<GameObject> CameraLocations;
+    public GameObject PointsParent;
+    [SerializeField] List<GameObject> Showcases;
     public float cameraMoveSpeed = 5f;
     public float moveCooldown = 2f;
     int index;
     float timer;
     Transform prevLocation;
     Transform targetLocation;
+    [HideInInspector] public UnityEvent StopAllEvent;
 
-    // Start is called before the first frame update
+    #region SceneManager Singleton
+    static private SceneManager instance;
+    static public SceneManager Instance { get { return instance; } }
+
+    void CheckManagerInScene()
+    {
+
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
+    }
+    #endregion
+
+    private void Awake()
+    {
+        CheckManagerInScene();
+        StopAllEvent = new UnityEvent();
+    }
+
+
     void Start()
     {
         index = 0;
-        prevLocation = CameraLocations[index].transform;
-        targetLocation = CameraLocations[index].transform;
+        prevLocation = Showcases[index].transform;
+        targetLocation = Showcases[index].transform;
         timer = 0;
     }
 
@@ -46,22 +72,24 @@ public class SceneManager : MonoBehaviour
 
     public void NextSpot()
     {
+        StopAllEvent.Invoke();
         prevLocation = _camera.transform;
-        index = (index + 1) % CameraLocations.Count;
+        index = (index + 1) % Showcases.Count;
         timer = moveCooldown;
-        targetLocation = CameraLocations[index].transform;
+        targetLocation = Showcases[index].transform;
     }
 
     public void PrevSpot()
     {
+        StopAllEvent.Invoke();
         prevLocation = _camera.transform;
         index--;
         if (index == -1)
         {
-            index = CameraLocations.Count - 1;
+            index = Showcases.Count - 1;
         }
         timer = moveCooldown;
-        targetLocation = CameraLocations[index].transform;
+        targetLocation = Showcases[index].transform;
     }
 
     bool isCameraMoving()
