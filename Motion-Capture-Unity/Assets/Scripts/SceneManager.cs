@@ -14,7 +14,9 @@ public class SceneManager : MonoBehaviour
     float timer;
     Transform prevLocation;
     Transform targetLocation;
+    bool isMoving = false;
     [HideInInspector] public UnityEvent StopAllEvent;
+    [HideInInspector] public UnityEvent<bool> NewStateEvent;
 
     #region SceneManager Singleton
     static private SceneManager instance;
@@ -38,6 +40,7 @@ public class SceneManager : MonoBehaviour
     {
         CheckManagerInScene();
         StopAllEvent = new UnityEvent();
+        NewStateEvent = new UnityEvent<bool>();
     }
 
 
@@ -53,6 +56,13 @@ public class SceneManager : MonoBehaviour
     {
         _camera.transform.position = Vector3.Lerp(prevLocation.position, targetLocation.position, cameraMoveSpeed * Time.deltaTime);
         _camera.transform.LookAt(2 * _camera.transform.position - PointsParent.transform.position);
+
+        if (isMoving != isCameraMoving())
+        {
+            isMoving = isCameraMoving();
+            NewStateEvent.Invoke(isMoving);
+        }
+
         if (timer > 0)
         {
             timer -= Time.deltaTime;
@@ -61,16 +71,20 @@ public class SceneManager : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.LeftArrow))
             {
-                PrevSpot();
+                MoveLeft();
             }
             else if (Input.GetKeyDown(KeyCode.RightArrow))
             {
-                NextSpot();
+                MoveRight();
             }
+        }
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            PlayShowcase();
         }
     }
 
-    public void NextSpot()
+    public void MoveRight()
     {
         StopAllEvent.Invoke();
         prevLocation = _camera.transform;
@@ -79,7 +93,7 @@ public class SceneManager : MonoBehaviour
         targetLocation = Showcases[index].transform;
     }
 
-    public void PrevSpot()
+    public void MoveLeft()
     {
         StopAllEvent.Invoke();
         prevLocation = _camera.transform;
@@ -92,8 +106,16 @@ public class SceneManager : MonoBehaviour
         targetLocation = Showcases[index].transform;
     }
 
+    public void PlayShowcase()
+    {
+        if (isCameraMoving()) return;
+
+        //start playing the audio track, video, and facial tracking animation of Showcases[index]
+
+    }
+
     bool isCameraMoving()
     {
-        return false;
+        return Mathf.Abs((_camera.transform.position - targetLocation.position).magnitude) > 0.05f;
     }
 }
