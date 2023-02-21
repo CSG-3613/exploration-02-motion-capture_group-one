@@ -1,9 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Video;
+using UnityEngine.Playables;
 
 public class Showcase : MonoBehaviour
 {
+    [SerializeField] VideoPlayer[] vp;
+    [SerializeField] PlayableDirector[] pd;
     bool isPlaying = false;
     public void Awake()
     {
@@ -19,12 +23,28 @@ public class Showcase : MonoBehaviour
     public void StartShowcase()
     {
         isPlaying = true;
+        foreach (VideoPlayer v in vp)
+        {
+            v.Play();
+        }
+        foreach (PlayableDirector p in pd)
+        {
+            p.Play();
+        }
     }
 
     public void StopShowcase()
     {
         if (!isPlaying) return;
         isPlaying = false;
+        foreach (VideoPlayer v in vp)
+        {
+            v.Stop();
+        }
+        foreach (PlayableDirector p in pd)
+        {
+            p.Stop();
+        }
     }
 
 }

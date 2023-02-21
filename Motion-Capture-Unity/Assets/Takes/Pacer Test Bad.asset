@@ -32,7 +32,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: af66da441399ac14386d6435579ad7f6, type: 3}
-  m_Name: Pacer Test
+  m_Name: Pacer Test Bad
   m_EditorClassIdentifier: 
   m_SceneNumber: 1
   m_ShotName: New Shot

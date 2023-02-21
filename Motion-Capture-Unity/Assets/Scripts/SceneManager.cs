@@ -110,7 +110,7 @@ public class SceneManager : MonoBehaviour
     {
         if (isCameraMoving()) return;
 
-        //start playing the audio track, video, and facial tracking animation of Showcases[index]
+        Showcases[index].GetComponent<Showcase>().StartShowcase();
 
     }
 
