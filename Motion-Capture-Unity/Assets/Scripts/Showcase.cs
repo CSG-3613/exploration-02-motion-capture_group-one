@@ -6,8 +6,10 @@ using UnityEngine.Playables;
 
 public class Showcase : MonoBehaviour
 {
+    public string Label;
     [SerializeField] VideoPlayer[] vp;
     [SerializeField] PlayableDirector[] pd;
+    [SerializeField] AudioSource audioPlayer;
     bool isPlaying = false;
     public void Awake()
     {
@@ -31,6 +33,7 @@ public class Showcase : MonoBehaviour
         {
             p.Play();
         }
+        audioPlayer.Play();
     }
 
     public void StopShowcase()
@@ -45,6 +48,7 @@ public class Showcase : MonoBehaviour
         {
             p.Stop();
         }
+        audioPlayer.Stop();
     }
 
 }
