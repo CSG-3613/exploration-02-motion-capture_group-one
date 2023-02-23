@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using TMPro;
 
 public class SceneManager : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class SceneManager : MonoBehaviour
     [SerializeField] List<GameObject> Showcases;
     public float cameraMoveSpeed = 5f;
     public float moveCooldown = 2f;
+    [SerializeField] TMP_Text label;
     int index;
     float timer;
     Transform prevLocation;
@@ -49,6 +51,7 @@ public class SceneManager : MonoBehaviour
         index = 0;
         prevLocation = Showcases[index].transform;
         targetLocation = Showcases[index].transform;
+        label.text = Showcases[index].GetComponent<Showcase>().Label;
         timer = 0;
     }
 
@@ -91,6 +94,7 @@ public class SceneManager : MonoBehaviour
         index = (index + 1) % Showcases.Count;
         timer = moveCooldown;
         targetLocation = Showcases[index].transform;
+        label.text = Showcases[index].GetComponent<Showcase>().Label;
     }
 
     public void MoveLeft()
@@ -104,6 +108,7 @@ public class SceneManager : MonoBehaviour
         }
         timer = moveCooldown;
         targetLocation = Showcases[index].transform;
+        label.text = Showcases[index].GetComponent<Showcase>().Label;
     }
 
     public void PlayShowcase()
