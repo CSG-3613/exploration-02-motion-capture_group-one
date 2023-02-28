@@ -2000,7 +2000,7 @@ MonoBehaviour:
   m_LeftEye: Armature/Hips/Spine/Neck/Head/LeftEye
   m_RightEye: Armature/Hips/Spine/Neck/Head/RightEye
   m_EyeAngleRange: {x: 45, y: 30}
-  m_EyeAngleOffset: {x: 0, y: 0}
+  m_EyeAngleOffset: {x: -3.21, y: -101.11}
   m_EyeSmoothing: 0.1
   m_HeadPosition: Armature/Hips/Spine/Neck/Head
   m_HeadRotation: Armature/Hips/Spine/Neck/Head
