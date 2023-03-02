@@ -20,6 +20,10 @@ public class Showcase : MonoBehaviour
     private void Start()
     {
         transform.LookAt(2 * transform.position - SceneManager.Instance.PointsParent.transform.position);
+        foreach (VideoPlayer v in vp)
+        {
+            v.Prepare();
+        }
     }
 
     public void StartShowcase()
